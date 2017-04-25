@@ -1,0 +1,27 @@
+sudo chmod a+x all the .cgi scripts in the folder
+sudo a2enmod cgi
+
+# Eventually put this in the install-mos script
+sudo adduser mos
+sudo usermod -aG sudo mos
+
+to make cgi able to run systemd stuff,
+http://stackoverflow.com/questions/14142768/what-is-the-best-way-to-execute-cgi-scripts-with-root-privileges
+In /etc/sudoers:
+
+wwwdata    ALL=(ALL) /usr/local/bin/allowed-operation
+
+And then in the script:
+
+sudo /usr/local/bin/allowed-operation
+
+So for the above, there would be a folder of scripts that can be run from a specific directory that will have the ability to modify system settings
+
+
+OR
+
+%www-data ALL=NOPASSWD: /usr/sbin/service SERVICENAME *
+
+or
+
+%www-data ALL=NOPASSWD: /usr/sbin/service SERVICENAME stop, /usr/sbin/service SERVICENAME start, /usr/sbin/service SERVICENAME restart

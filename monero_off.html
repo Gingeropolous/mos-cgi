@@ -1,0 +1,19 @@
+#!/bin/bash
+
+echo "Content-type: text/html"
+echo ""
+
+echo '<html>'
+echo '<head>'
+echo '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">'
+echo '<title>Monerodo Operating System Web Interface</title>'
+echo '</head>'
+echo '<body>'
+
+sudo /opt/mos/monero_core_off.sh
+
+echo '<h3>You have turned Monero Network Service off</h3><br><br>'
+
+echo '</body>'
+echo '</html>'
+

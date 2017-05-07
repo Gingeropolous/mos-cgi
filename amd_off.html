@@ -1,0 +1,26 @@
+#!/bin/bash
+
+echo "Content-type: text/html"
+echo ""
+
+echo '<html>'
+echo '<head>'
+echo '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">'
+echo '<title>Monerodo Operating System Web Interface</title>'
+echo '</head>'
+echo '<body>'
+
+## Navigation bare on top. Enter a new thing with its name and then spaces
+echo 'Navigation Bar - Use this to navigate to get proper system information!!! <br>'
+echo '<a href="index.html">Main Menu </a> >> '
+echo '<a href="device_management.html">Device Management </a> >> '
+echo '<a href="mining_settings.html">Mining Settings </a> >> '
+echo '<br>'
+
+sudo /opt/mos/amd_off.sh
+
+echo '<h3>You have turned AMD Miner off</h3><br><br>'
+
+echo '</body>'
+echo '</html>'
+

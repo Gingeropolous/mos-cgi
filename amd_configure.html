@@ -1,0 +1,80 @@
+#!/bin/bash
+
+echo "Content-type: text/html"
+echo ""
+
+echo '<html>'
+echo '<head>'
+echo '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">'
+echo '<meta http-equiv="cache-control" content="no-cache, must-revalidate, post-check=0, pre-check=0" />'
+echo '<meta http-equiv="cache-control" content="max-age=0" />'
+echo '<meta http-equiv="expires" content="0" />'
+echo '<meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />'
+echo '<meta http-equiv="pragma" content="no-cache" />'
+echo '<title>MOS Device Management</title>'
+echo '</head>'
+echo '<body>'
+
+
+## Navigation bare on top. Enter a new thing with its name and then spaces
+echo 'Navigation Bar - Use this to navigate to get proper system information!!! <br>'
+echo '<a href="index.html">Main Menu </a> >> '
+echo '<a href="device_management.html">Device Management </a> >> '
+echo '<a href="mining_settings.html">Mining Settings </a> >> '
+echo '<br>'
+
+
+echo "<h2>AMD Mining Configuration</h3><br><br>"
+
+echo "<form method=GET action=\"${SCRIPT}\">"\
+       '<table nowrap>'\
+          '<tr><td>Mining Address</TD><TD><input type="text" name="mine_add" size=80></td></tr>'\
+          '<tr><td>Pool URL</td><td><input type="text" name="pool_add" size=40 value="mine.xmrpool.net"></td>'\
+          '<tr><td>Pool port</td><td><input type="text" name="pool_port" size=12 value="5555"></td>'\
+          '</tr></table>'
+
+  echo '<br><input type="submit" value="Process Form">'\
+       '<input type="reset" value="Reset"></form>'
+
+  # Make sure we have been invoked properly.
+
+  if [ "$REQUEST_METHOD" != "GET" ]; then
+        echo "<hr>Script Error:"\
+             "<br>Usage error, cannot complete request, REQUEST_METHOD!=GET."\
+             "<br>Check your FORM declaration and be sure to use METHOD=\"GET\".<hr>"
+        exit 1
+  fi
+
+  # If no search arguments, exit gracefully now.
+
+  if [ -z "$QUERY_STRING" ]; then
+        exit 0
+  else
+     # No looping this time, just extract the data you are looking for with sed:
+     export MINE_ADD=`echo "$QUERY_STRING" | sed -n 's/^.*mine_add=\([^&]*\).*$/\1/p' | sed "s/%20/ /g"`
+     export POOL_ADD=`echo "$QUERY_STRING" | sed -n 's/^.*pool_add=\([^&]*\).*$/\1/p' | sed "s/%20/ /g"`
+     export POOL_PORT=`echo "$QUERY_STRING" | sed -n 's/^.*pool_port=\([^&]*\).*$/\1/p' | sed "s/%20/ /g"`
+     echo "Mining Address" $MINE_ADD
+     echo '<br>'
+     echo "Pool Address: " $POOL_ADD
+     echo '<br>'
+     echo "Pool port: " $POOL_PORT
+  fi
+
+FILEDIR=/home/mos/.monerodo/
+now=$(date +"%m_%d_%Y")
+FILENAME=miner.conf
+
+cp $FILEDIR/$FILENAME $FILEDIR/$FILENAME.$now
+
+new_line="\"user\": \"$MINE_ADD\","
+new_ip="\"url\": \"stratum+tcp:\/\/$POOL_ADD:$POOL_PORT\","
+sed -i "s/.*user.*/$new_line/g" $FILEDIR/$FILENAME
+sed -i "s/.*url.*/$new_ip/g" $FILEDIR/$FILENAME
+
+echo '</body>'
+echo '</html>'
+
+exit 0
+
+# Thank the shit outta whoever wrote this: http://www.yolinux.com/TUTORIALS/BashShellCgi.html

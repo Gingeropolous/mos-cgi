@@ -10,12 +10,38 @@ echo '<title>MOS Device Management</title>'
 echo '</head>'
 echo '<body>'
 
-echo '<h2>Device Mangement Submenu</h3><br><br>'
+mos_service="MON_daemon"
+this_service="Monero Network Service"
+running=$(service $mos_service status)
 
-echo '<h3>Monero Network Service</h3>'
+## Navigation bare on top. Enter a new thing with its name and then spaces
+echo 'Navigation Bar - Use this to navigate to get proper system information!!! <br>'
+echo '<a href="index.html">Main Menu </a> >> '
+echo '<a href="device_management.html">Device Management </a> >> '
+
+echo '<br>'
+
+
+echo "<h2>$this_service Management Submenu</h3><br><br>"
+
 
 echo '<a href="monero_off.html">Turn Monero Network Service Off</a><br>'
 echo '<a href="monero_on.html">Turn Monero Network Service On</a><br>'
+echo '<a href="monero_configure.html">Configure $this_service</a><br>'
+
+
+echo -e " \n \n <h2>$this_service status</h2>"
+
+if [ "$(echo $running | grep dead)" ] ; then
+
+echo "$this_service is not running<br>"
+
+elif [ "$(echo $running | grep running)" ] ; then
+echo "$this_service is running"
+
+#Eventually print out some shit from monero daemon, but will get complicated with variable RPC ports
+
+fi
 
 
 echo '</body>'

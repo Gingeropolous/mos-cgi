@@ -30,6 +30,7 @@ echo "<h2>$this_service Management Submenu</h3><br><br>"
 echo "<a href="amd_on.html">Turn $this_service Service On</a><br>"
 echo "<a href="amd_off.html">Turn $this_service Service Off</a><br>"
 echo "<a href="amd_configure.html">Configure $this_service</a><br>"
+
 echo -e " \n \n <h2>$this_service status</h2>"
 
 if [ "$(echo $running | grep dead)" ] ; then
@@ -38,7 +39,10 @@ echo "$this_service is not running<br>"
 
 elif [ "$(echo $running | grep running)" ] ; then
 echo "$this_service is running"
+
 fi
+
+# probably can't print configuration file because www-data doesn't have proper permissions
 
 
 

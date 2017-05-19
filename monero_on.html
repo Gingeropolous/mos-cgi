@@ -10,10 +10,17 @@ echo '<title>Monerodo Operating System Web Interface</title>'
 echo '</head>'
 echo '<body>'
 
+## Navigation bare on top. Enter a new thing with its name and then spaces
+echo 'Navigation Bar - Use this to navigate to get proper system information!!! <br>'
+echo '<a href="index.html">Main Menu </a> >> '
+echo '<a href="device_management.html">Device Management </a> >> '
+echo '<a href="monero_settings.html">Monero Settings </a> >> '
+echo '<br>'
+
+
 sudo /opt/mos/monero_core_on.sh
 
 echo '<h3>You have turned Monero Network Service on</h3><br><br>'
-
+echo '<br><br><a href="monero_settings.html">Back to Monero Settings </a>'
 echo '</body>'
 echo '</html>'
-
